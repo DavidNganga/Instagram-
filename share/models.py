@@ -19,8 +19,8 @@ class Profile(models.Model):
     def delete_profile(self):
         self.delete()
 
-    
 
+from tinymce.models import HTMLField
 class Image(models.Model):
     name = models.CharField(max_length =30)
     caption = models.CharField(max_length = 100)
