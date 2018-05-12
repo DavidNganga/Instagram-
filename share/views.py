@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse,HttpResponseRedirect
 from .models import Profile,Image
 # Create your views here.
-
+@login_required(login_url='/accounts/login')
 def welcome(request):
     profiles = Profile.get_all()
     images = Image.get_all()
@@ -42,3 +42,20 @@ def prof(request):
 def viewprofile(request):
     pics = Profile.get_all()
     return render(request, 'viewprofile.html', {"pics":pics})
+
+
+def search_results(request):
+
+    if 'name' in request.GET and request.GET["name"]:
+        search_term = request.GET.get("name")
+        print(search_term)
+
+        profiles = Profile.search_results(search_term)
+        message = f"{search_term}"
+        
+
+        return render(request, 'search.html',{"message":message,"profiles": profiles})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search.html',{"message":message})

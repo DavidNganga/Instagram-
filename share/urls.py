@@ -10,6 +10,7 @@ urlpatterns=[
     url(r'^post/', views.photo_post, name='post'),
     url(r'^profile/', views.prof, name='profile'),
     url(r'^viewprofile/', views.viewprofile, name='viewprofile'),
+    url(r'^search/',views.search_results, name='search_results'),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
