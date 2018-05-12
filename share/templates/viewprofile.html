@@ -1,0 +1,17 @@
+{%extends 'base.html'%}
+{% load static%}
+
+{% block content %}
+
+
+
+
+      <div class="panel panel-default">
+      {%for pic in pics%}
+      <img src="{{pic.profile_photo.url}}" class="img-responsive" alt="Image">
+      {%endfor%}
+
+    </div>
+
+
+{% endblock %}
