@@ -61,3 +61,7 @@ class Image(models.Model):
 class Comment(models.Model):
     post = models.CharField(max_length=150, null = True)
     author=models.ForeignKey(Profile, on_delete=models.CASCADE,null=True)
+
+class NewsLetterRecipients(models.Model):
+    name = models.CharField(max_length = 30)
+    email = models.EmailField()

@@ -3,13 +3,27 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse,HttpResponseRedirect
 from .models import Profile,Image,Comment
+from .email import send_welcome_email
+from .forms import NewsLetterForm
 # Create your views here.
 @login_required(login_url='/accounts/login')
 def welcome(request):
     photos = Profile.get_all()
     images = Image.get_all()
+    if request.method == 'POST':
+        form = NewsLetterForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['your_name']
+            email = form.cleaned_data['email']
 
-    return render(request, 'welcome.html', {"images":images}, {"photos":photos})
+            recipient = NewsLetterRecipients(name = name,email =email)
+            recipient.save()
+            send_welcome_email(name,email)
+
+            HttpResponseRedirect('welcome')
+    else:
+        form = NewsLetterForm()
+    return render(request, 'welcome.html', {"images":images}, {"photos":photos},{"letterForm":form})
 
 def photo_post(request):
     current_user = request.user
