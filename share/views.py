@@ -1,8 +1,8 @@
-from .forms import PostForm, ProfileForm
+from .forms import PostForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse,HttpResponseRedirect
-from .models import Profile,Image
+from .models import Profile,Image,Comment
 # Create your views here.
 @login_required(login_url='/accounts/login')
 def welcome(request):
@@ -61,6 +61,19 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
+
+def post_comment(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            Profile.user = current_user
+            comment.save()
+            return redirect('welcome')
+    else:
+            form = CommentForm()
+    return render(request, 'comment.html', {"form": form})
 
 # def userprofile(request,profile_id):
 #     profile = Profile.objects.get(id = profile_id)

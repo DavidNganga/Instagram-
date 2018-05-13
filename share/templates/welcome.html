@@ -1,4 +1,6 @@
 {%extends 'base.html'%}
+
+
 {% load static%}
 
 {% block content %}
@@ -10,7 +12,7 @@
         {% for profile in profiles %}
         <p>{{profile.name}}</p>
         {% endfor %}
-        
+
       {%for image in images%}
       <img src="{{image.image.url}}" class="center" alt="Image">
 
@@ -30,6 +32,6 @@
           </div>
         </div>
       </div>
+{%endfor%}
 
-    {%endfor%}
-{% endblock %}
+      {% endblock %}
