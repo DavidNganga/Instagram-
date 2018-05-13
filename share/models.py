@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 # Create your models here.
 
 
@@ -7,6 +8,7 @@ class Profile(models.Model):
     name = models.CharField(max_length = 30,null = True)
     bio = models.CharField(max_length = 30)
     profile_photo = models.ImageField(upload_to = 'images/',null = True)
+
     # user = models.ForeignKey(User,on_delete=models.CASCADE,null = True)
     # follows=models.ManyToManyField()
     #
@@ -25,13 +27,13 @@ class Profile(models.Model):
         self.delete()
 
     def get_Profile_by_id(cls,id):
-        name = cls.objects.get(id=id)
+        names = cls.objects.get(id=id)
         return names
 
     @classmethod
     def search_results(cls,search_term):
          names = cls.objects.filter(name__icontains=search_term)
-        
+
          return names
 
 from tinymce.models import HTMLField

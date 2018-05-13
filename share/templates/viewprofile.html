@@ -8,7 +8,11 @@
 
       <div class="panel panel-default">
       {%for pic in pics%}
+      <h1>   {{pic.name}}</h1>
       <img src="{{pic.profile_photo.url}}" class="img-responsive" alt="Image">
+      <h1>{{pic.bio}}</h1>
+
+
       {%endfor%}
 
     </div>

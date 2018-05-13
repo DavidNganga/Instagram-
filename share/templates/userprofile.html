@@ -1,0 +1,24 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-lg-12">
+
+    {{profile.name}}
+
+      <img src="{{profile.profile_photo.url}}" alt="">
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+{% endblock %}

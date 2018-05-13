@@ -19,7 +19,11 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-lg-12">
-      <p>{{profile.name}}</p>
+
+
+      <a href="{% url 'viewprofile' %}">
+  <p>{{profile.name}}</p>
+      </a>
 <img src="{{profile.profile_photo.url}}" alt="">
     </div>
 

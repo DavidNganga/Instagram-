@@ -52,10 +52,14 @@ def search_results(request):
 
         profiles = Profile.search_results(search_term)
         message = f"{search_term}"
-        
+
 
         return render(request, 'search.html',{"message":message,"profiles": profiles})
 
     else:
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
+
+# def userprofile(request,profile_id):
+#     profile = Profile.objects.get(id = profile_id)
+#     return render(request, 'userprofile.html',{"profile":profile, id: profile_id})
