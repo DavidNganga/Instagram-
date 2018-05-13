@@ -6,9 +6,10 @@ from .models import Profile,Image
 # Create your views here.
 @login_required(login_url='/accounts/login')
 def welcome(request):
-    profiles = Profile.get_all()
+    photos = Profile.get_all()
     images = Image.get_all()
-    return render(request, 'welcome.html', {"images":images}, {"profiles":profiles})
+
+    return render(request, 'welcome.html', {"images":images}, {"photos":photos})
 
 def photo_post(request):
     current_user = request.user
@@ -41,7 +42,8 @@ def prof(request):
 
 def viewprofile(request):
     pics = Profile.get_all()
-    return render(request, 'viewprofile.html', {"pics":pics})
+    snaps = Image.get_all()
+    return render(request, 'viewprofile.html', {"pics":pics},{"snaps":snaps})
 
 
 def search_results(request):

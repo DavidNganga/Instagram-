@@ -9,9 +9,7 @@ class Profile(models.Model):
     bio = models.CharField(max_length = 30)
     profile_photo = models.ImageField(upload_to = 'images/',null = True)
 
-    # user = models.ForeignKey(User,on_delete=models.CASCADE,null = True)
-    # follows=models.ManyToManyField()
-    #
+
     @classmethod
     def get_all(cls):
         pics = cls.objects.all()
@@ -59,3 +57,7 @@ class Image(models.Model):
     def get_Image_by_id(cls,id):
         images = cls.objects.get(id=id)
         return images
+
+class Comment(models.Model):
+    post = models.CharField(max_length=150, null = True)
+    author=models.ForeignKey(User, on_delete=models.CASCADE,null=True)
