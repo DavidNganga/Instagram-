@@ -7,11 +7,12 @@
 
 
       <div class="panel panel-default">
-        {% for profile in profiles%}
+        {% for profile in profiles %}
         <p>{{profile.name}}</p>
-        {% endfor%}
+        {% endfor %}
       {%for image in images%}
       <img src="{{image.image.url}}" class="center" alt="Image">
+
       {%endfor%}
 
     </div>

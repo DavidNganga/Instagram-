@@ -4,32 +4,28 @@
 
 
 <div class="container">
-
   <div class="row">
     {% if profiles%}
       <h2>Found {{ profiles|length }} of searched term {{message}}</h2>
     {% else %}
       <h2> Found 0 profiles for the search term {{message}}</h2>
     {% endif %}
-
   </div>
+
 
 {% if profiles %}
 {% for profile in profiles %}
-<div class="container">
+<div class="container mt-2">
   <div class="row">
-    <div class="col-xs-12 col-sm-12 col-lg-12">
-
-
-      <a href="{% url 'viewprofile' %}">
-  <p>{{profile.name}}</p>
-      </a>
-<img src="{{profile.profile_photo.url}}" alt="">
+    <div class="col- mx-auto p-5" style="background-color:#ffffff; border: 1px solid #e6e6e6;">
+      <div class="profile p-4" style="white-space:nowrap">
+        <img src="{{profile.profile_photo.url}}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;">
+          <a href="{% url 'viewprofile' %}">
+        <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{profile.name}}</strong> found</p></a>
+        <hr>
+      </div>
     </div>
-
   </div>
-
-</div>
 {% endfor %}
 {% endif%}
 {% endblock %}

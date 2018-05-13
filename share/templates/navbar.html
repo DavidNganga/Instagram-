@@ -6,17 +6,20 @@
 </head>
 <body>
 
-<div class="container">
+
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-  <a class="navbar-brand" href="{% url 'welcome' %} ">
-<img src="" alt="">
-  </a>
+
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="{% url 'welcome' %}">Instagram</a>
+
     </div>
+
+    <div class=" navbar-expand-lg ">
+
+  </div>
 
     <!-- Adding a search form  -->
     <div class="col-sm-8 col-md-8 navbar-right">
@@ -31,14 +34,12 @@
           </div>
         </div>
       </form>
-  <div class="col-sm-12 col-md-12 navbar-right">
-      <a  class="button" href="{% url 'post' %}"> pos a pic</a>
-</div>
+
       <div class="col-sm-12 col-md-12"  >
             {% if user.is_authenticated %}
-            <ul>
-            <a href="#">{{user.username}}</a>
-              <li class="nav-item dropdown navbar-right">
+            <ul class="nav navbar-nav navbar-right">
+<li><a href="#">{{user.username}}</a></li>
+              <li class="dropdown">
                 <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account
                           <span class="caret"></span>
                       </a>
@@ -48,6 +49,9 @@
                   </li>
                   <li>
                     <a href="/accounts/register/">Create Account</a>
+                  </li>
+                  <li>
+  <a  class="button" href="{% url 'post' %}">Upload</a>
                   </li>
                   <li>
                     <a href="/accounts/password/change">Change Password</a>

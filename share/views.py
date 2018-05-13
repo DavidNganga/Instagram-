@@ -8,7 +8,7 @@ from .models import Profile,Image
 def welcome(request):
     profiles = Profile.get_all()
     images = Image.get_all()
-    return render(request, 'welcome.html', {"images":images}, {"profile":profiles})
+    return render(request, 'welcome.html', {"images":images}, {"profiles":profiles})
 
 def photo_post(request):
     current_user = request.user

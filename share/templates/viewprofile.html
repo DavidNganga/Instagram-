@@ -6,16 +6,28 @@
 
 
 
-      <div class="panel panel-default">
-      {%for pic in pics%}
-      <h1>   {{pic.name}}</h1>
-      <img src="{{pic.profile_photo.url}}" class="img-responsive" alt="Image">
-      <h1>{{pic.bio}}</h1>
 
+  {%for pic in pics%}
+      <div class="container mt-2">
+        <div class="row">
+          <div class="col- mx-auto p-5" style="background-color:#ffffff; border: 1px solid #e6e6e6;">
+            <div class="profile p-4" style="white-space:nowrap">
+              <img src="{{pic.profile_photo.url}}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;">
+
+              <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{pic.name}}</strong> </p>
+              <br>
+              <br>
+              <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{pic.bio}}</strong> </p>
+              <hr>
+            </div>
+          </div>
+        </div>
 
       {%endfor%}
 
     </div>
-
+    <div class="col-4 m-2">
+            <img src="{{image.image.url}}" alt="" class="img-fluid">
+          </div>
 
 {% endblock %}
