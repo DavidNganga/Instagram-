@@ -8,7 +8,7 @@ class Profile(models.Model):
     name = models.CharField(max_length = 30,null = True)
     bio = models.CharField(max_length = 30)
     profile_photo = models.ImageField(upload_to = 'images/',null = True)
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     @classmethod
     def get_all(cls):
