@@ -2,29 +2,18 @@
 {% load bootstrap3 %}
 {% load static%}
 {% block content %}
-        <!-- {%for photo in photos%}
-            <div class="container mt-2">
-              <div class="row">
-                <div class="col- mx-auto p-5" style="background-color:#ffffff; border: 1px solid #e6e6e6;">
-                  <div class="profile p-4" style="white-space:nowrap">
-                    <img src="{{photo.profile_photo.url}}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;">
-                    <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{photo.name}}</strong> </p>
-                  </div>
-                </div>
-              </div>
-        {%endfor%} -->
-      <!-- {%for image in images%}
-      <img src="{{image.image.url}}" class="center" alt="Image">
-        {%for comment in comments%} <p><a href="{% url 'viewprofile' %}">{{comment.author}}</a>:{{comment.post}} </p>  {%endfor%}
-        <a href="{% url 'comment' %}">Add Comment</a>
-{%endfor%} -->
+
+
 {%for image in images%}
 
 <div class="card" style="max-width: 120rem;">
   {%for photo in photos%}
-    <a href="{% url 'viewprofile' %}"><img src="{{photo.profile_photo.url }}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;"></a>
-      <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{photo.name}}</strong> </p>{%endfor%}
+    <a href="{% url 'viewprofile' %}"><img src="{{photo.profile_photo.url}}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;"></a>
+
+      <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{photo.name}}</strong> </p>
+
 <img class="center" src="{{image.image.url }}" class="center" alt="Card image cap">
+
   <div class="card-body">
     {%for comment in comments%} <p class="card-text"><a href="{% url 'viewprofile' %}">{{comment.author}}</a>:{{comment.post}} </p>  {%endfor%}
     <a href="{% url 'comment' %}" class="btn btn-primary">Add Comment</a>
@@ -32,6 +21,7 @@
 </div>
 </div>
 {%endfor%}
+    {%endfor%}
 
 <div class="container-fluid">
   <form  action="{%url 'welcome'%}" method="post">

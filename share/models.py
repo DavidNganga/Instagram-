@@ -8,7 +8,7 @@ class Profile(models.Model):
     name = models.CharField(max_length = 30,null = True)
     bio = models.CharField(max_length = 30)
     profile_photo = models.ImageField(upload_to = 'images/',null = True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
 
     @classmethod
     def get_all(cls):
@@ -40,7 +40,7 @@ class Image(models.Model):
     caption = models.CharField(max_length = 100)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE,null=True)
     image = models.ImageField(upload_to = 'images/',null = True)
-    likes=models.ManyToManyField(User, blank=True, related_name="image_likes")
+
 
     @classmethod
     def get_all(cls):
