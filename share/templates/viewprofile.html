@@ -27,8 +27,17 @@
 
     </div>
       {%for snap in snaps%}
-    <div class="col-4 m-2">
-            <img src="{{snap.image.url}}" alt="" class="img-fluid">
+      <div class="container mt-2">
+        <div class="row">
+          <div class="col- mx-auto p-5" style="background-color:#ffffff; border: 1px solid #e6e6e6;">
+            <div class="profile p-4" style="white-space:nowrap">
+
+              <img src="{{snap.image.url}}" alt="" class="img-fluid">
+
+
+            </div>
           </div>
+        </div>
+
   {%endfor%}
 {% endblock %}
