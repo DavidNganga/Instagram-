@@ -6,29 +6,32 @@
 
 
 
-
+<!--
       <div class="panel panel-default">
         {% for profile in profiles %}
         <p>{{profile.name}}</p>
-        {% endfor %}
+        {% endfor %} -->
+        {%for photo in photos%}
+            <div class="container mt-2">
+              <div class="row">
+                <div class="col- mx-auto p-5" style="background-color:#ffffff; border: 1px solid #e6e6e6;">
+                  <div class="profile p-4" style="white-space:nowrap">
+                    <img src="{{photo.profile_photo.url}}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;">
 
+                    <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{photo.name}}</strong> </p>
+                  </div>
+                </div>
+              </div>
+        {%endfor%}
       {%for image in images%}
       <img src="{{image.image.url}}" class="center" alt="Image">
       {%endfor%}
+      {%for comment in comments%}  <p> {{comment.author}}:{{comment.post}} </p>  {%endfor%}
     </div>
 
-{%for photo in photos%}
-    <div class="container mt-2">
-      <div class="row">
-        <div class="col- mx-auto p-5" style="background-color:#ffffff; border: 1px solid #e6e6e6;">
-          <div class="profile p-4" style="white-space:nowrap">
-            <img src="{{photo.profile_photo.url}}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;">
 
-            <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{photo.name}}</strong> </p>
-          </div>
-        </div>
-      </div>
-{%endfor%}
+
+
 <div class="container-fluid">
 
   <form  action="{%url 'welcome'%}" method="post">

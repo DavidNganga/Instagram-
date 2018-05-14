@@ -62,6 +62,15 @@ class Comment(models.Model):
     post = models.CharField(max_length=150, null = True)
     author=models.ForeignKey(Profile, on_delete=models.CASCADE,null=True)
 
+    @classmethod
+    def get_all(cls):
+        opinions = cls.objects.all()
+        return opinions
+
+    def get_Comment_by_id(cls,id):
+        views = cls.objecs.get(id=id)
+        return views
+
 class NewsLetterRecipients(models.Model):
     name = models.CharField(max_length = 30)
     email = models.EmailField()

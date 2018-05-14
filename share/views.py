@@ -10,6 +10,7 @@ from .email import send_welcome_email
 def welcome(request):
     photos = Profile.get_all()
     images = Image.get_all()
+    comments = Comment.get_all()
     if request.method == 'POST':
         form = NewsLetterForm(request.POST)
         if form.is_valid():
@@ -21,9 +22,10 @@ def welcome(request):
             send_welcome_email(name,email)
 
             HttpResponseRedirect('welcome')
+            print(comments)
     else:
         form = NewsLetterForm()
-    return render(request, 'welcome.html', {"images":images,"photos":photos,"letterForm":form})
+    return render(request, 'welcome.html', {"images":images,"photos":photos,"letterForm":form, "comments":comments})
 
 def photo_post(request):
     current_user = request.user
@@ -57,6 +59,7 @@ def prof(request):
 def viewprofile(request):
     pics = Profile.get_all()
     snaps = Image.get_all()
+
     print(snaps)
     return render(request, 'viewprofile.html', {"pics":pics, "snaps":snaps})
 
