@@ -28,6 +28,9 @@ class Profile(models.Model):
         names = cls.objects.get(id=id)
         return names
 
+    def get_User_by_id(cls,id):
+        usser = cls.objects.get(id=id)
+        return usser
     @classmethod
     def search_results(cls,search_term):
          names = cls.objects.filter(name__icontains=search_term)

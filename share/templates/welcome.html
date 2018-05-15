@@ -4,14 +4,16 @@
 {% block content %}
 
 
+<!-- looping through the Images -->
+
+
 {%for image in images%}
 
 <div class="card" style="max-width: 120rem;">
   {%for photo in photos%}
-    <a href="{% url 'viewprofile' %}"><img src="{{photo.profile_photo.url}}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;"></a>
-
+    <a href="{% url 'viewprofile' %}"><img src="{{photo.profile_photo.url }}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;"></a>
       <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{photo.name}}</strong> </p>
-
+{%endfor%}
 <img class="center" src="{{image.image.url }}" class="center" alt="Card image cap">
 
   <div class="card-body">
@@ -21,7 +23,7 @@
 </div>
 </div>
 {%endfor%}
-    {%endfor%}
+
 
 <div class="container-fluid">
   <form  action="{%url 'welcome'%}" method="post">
