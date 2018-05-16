@@ -17,7 +17,7 @@ class NewsLetterForm(forms.Form):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude=[]
+        exclude=["user"]
 
 class CommentForm(forms.ModelForm):
     class Meta:
