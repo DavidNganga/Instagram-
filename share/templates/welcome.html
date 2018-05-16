@@ -12,7 +12,10 @@
 <div class="card" style="max-width: 120rem;">
   {%for image in images%}
 
+
+
     <a href="{% url 'viewprofile' %}"><img src="{{image.profile.profile_photo.url }}" alt="vv" style="height:70px;width:70px; border-radius:50%; display:inline;"></a>
+
 
 
       <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{photo.name}}</strong> </p>

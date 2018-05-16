@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 def welcome(request):
     current_user=request.user.id
     Profile.user = current_user
+    # profiles = Profile.objects.all()
     photos = Profile.get_all()
     images = Image.objects.all().filter(profile__user=current_user)
     comments = Comment.get_all()
@@ -68,16 +69,6 @@ def prof(request):
             form = ProfileForm()
     return render(request, 'profile.html', {"form": form})
 
-@login_required
-def viewprofile(request):
-    '''
-    view function for displaying a user's profile page
-    '''
-    pics = Profile.get_all()
-    snaps = Image.get_all()
-
-    print(snaps)
-    return render(request, 'viewprofile.html', {"pics":pics, "snaps":snaps})
 
 @login_required
 def search_results(request):
@@ -98,6 +89,21 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
+
+
+@login_required
+def viewprofile(request):
+    '''
+    view function for displaying a user's profile page
+    '''
+    current_user=request.user.id
+    Profile.user = current_user
+    pics = Profile.objects.get()
+    snaps = Image.get_all()
+
+    print(snaps)
+    return render(request, 'viewprofile.html', {"pics":pics, "snaps":snaps})
+
 
 def post_comment(request,id):
     current_user = request.user
