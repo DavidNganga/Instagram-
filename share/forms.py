@@ -6,7 +6,7 @@ a form for posting new images,captions
 class PostForm(forms.ModelForm):
     class Meta:
         model = Image
-        exclude=["Profile"]
+        exclude=["profile"]
 
 
 class NewsLetterForm(forms.Form):
