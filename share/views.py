@@ -8,8 +8,10 @@ from django.contrib.auth.models import User
 # Create your views here.
 @login_required(login_url='/accounts/login')
 def welcome(request):
+    current_user=request.user.id
+    Profile.user = current_user
     photos = Profile.get_all()
-    images = Image.get_all()
+    images = Image.objects.all().filter(profile__user=current_user)
     comments = Comment.get_all()
     '''
     subscription form for a newsletter
@@ -40,15 +42,15 @@ def photo_post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.save(commit=False)
-            Profile.user = current_user
+            Image.profile = current_user
             image.save()
             return redirect('welcome')
     else:
         form = PostForm()
     return render(request, 'post.html', {"form": form})
 @login_required
-# def all(request):
-#     return render(request,"welcome.html")
+def all(request):
+    return render(request,"welcome.html")
 @login_required
 def prof(request):
     current_user = request.user
