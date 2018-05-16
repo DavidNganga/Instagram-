@@ -61,6 +61,7 @@ def prof(request):
         '''
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
+
             profile = form.save(commit=False)
             Profile.user = current_user
             profile.save()
@@ -98,7 +99,7 @@ def viewprofile(request):
     '''
     current_user=request.user.id
     Profile.user = current_user
-    pics = Profile.objects.get()
+    pics = Profile.objects.all()
     snaps = Image.get_all()
 
     print(snaps)
