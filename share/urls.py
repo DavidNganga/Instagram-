@@ -5,16 +5,14 @@ from django.conf import settings
 
 urlpatterns=[
     url(r'^$',views.welcome,name='welcome'),
-
-
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^post/', views.photo_post, name='post'),
     url(r'^profile/', views.prof, name='profile'),
-    url(r'^viewprofile/', views.viewprofile, name='viewprofile'),
+    url(r'^viewprofile/(\d+)', views.viewprofile, name='viewprofile'),
     url(r'^search/',views.search_results, name='search_results'),
-    url(r'^comment/',views.post_comment, name='comment'),
-
-
+    url(r'^comment/(\d+)',views.post_comment, name='comment'),
+    url(r'^image/(?P<id>\d+)/likes', views.like_image, name='like_image'),
+    url(r'^imagedetails/(\d+)', views.imagedetails, name='imagedetails'),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

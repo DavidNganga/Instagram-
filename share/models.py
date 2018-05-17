@@ -43,7 +43,9 @@ class Image(models.Model):
     caption = models.CharField(max_length = 100)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE,null=True)
     image = models.ImageField(upload_to = 'images/',null = True)
+    likes = models.ManyToManyField(User, related_name='image_likes', blank=True)
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
 
     @classmethod
     def get_all(cls):
@@ -60,20 +62,40 @@ class Image(models.Model):
     def get_Image_by_id(cls,id):
         images = cls.objects.get(id=id)
         return images
+    def get_imagecurrent(cls, current_user):
+        images=Image.objects.filter(profile__user=current_user)
+        return images
 
 class Comment(models.Model):
     post = models.CharField(max_length=150, null = True)
     author=models.ForeignKey(Profile, on_delete=models.CASCADE,null=True)
+    image = models.ForeignKey(Image,null = True,on_delete = models.CASCADE)
 
     @classmethod
     def get_all(cls):
         opinions = cls.objects.all()
         return opinions
 
+
     def get_Comment_by_id(cls,id):
         views = cls.objecs.get(id=id)
         return views
 
+
+
 class NewsLetterRecipients(models.Model):
     name = models.CharField(max_length = 30)
     email = models.EmailField()
+
+
+class Likes(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    likes=models.IntegerField(default=0, null=True)
+
+    def __str__(self):
+        return self.user.username
+
+    @classmethod
+    def get_likes(cls):
+        likes=cls.objects.all()
+        return likes

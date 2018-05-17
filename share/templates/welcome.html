@@ -5,31 +5,25 @@
 
 
 <!-- looping through the Images -->
-
-
-{%for image in images%}
-
-<div class="card" style="max-width: 120rem;">
   {%for image in images%}
-
-
+<div class="card" style="max-width: 120rem;">
 
     <a href="{% url 'viewprofile' %}"><img src="{{image.profile.profile_photo.url }}" alt="vv" style="height:70px;width:70px; border-radius:50%; display:inline;"></a>
-
-
-
       <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{photo.name}}</strong> </p>
-{%endfor%}
 
-<img class="center" src="{{image.image.url }}" class="center" alt="Card image cap">
+
+<a href="{% url 'imagedetails' image.id %}">  <img class="center" src="{{image.image.url }}" class="center" alt="Card image cap"></a>
+
     <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{image.caption}}</strong> </p>
+
   <div class="card-body">
-    {%for comment in comments%} <p class="card-text"><a href="{% url 'viewprofile' %}">{{comment.author}}</a>:{{comment.post}} </p>  {%endfor%}
-    <a href="{% url 'comment' %}" class="btn btn-primary">Add Comment</a>
+      {% for comment in comments%}
+  <p class="card-text"><a href="{% url 'viewprofile' %}">{{comment.author}}</a>:{{comment.post}} </p>
+{% endfor %}
   </div>
 </div>
-</div>
 {%endfor%}
+</div>
 
 
 <div class="container-fluid">

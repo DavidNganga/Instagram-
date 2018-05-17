@@ -1,0 +1,40 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block content %}
+<!--
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-lg-12">
+
+
+
+      <img src="{{image.image.url}}" alt="">
+
+
+
+    </div>
+
+  </div>
+
+</div> -->
+
+<div class="card" style="max-width: 120rem;">
+
+
+
+
+
+<a href="{% url 'imagedetails' image.id %}">  <img class="center" src="{{image.image.url }}" class="center" alt="Card image cap"></a>
+
+
+
+  <div class="card-body">
+    {{image.id}}
+  <a href="{%url 'comment' image.id%}">Add Comment</a>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

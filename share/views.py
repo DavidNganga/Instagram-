@@ -1,19 +1,23 @@
 from .forms import PostForm, ProfileForm, CommentForm,NewsLetterForm
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect
-from .models import Profile,Image,Comment,NewsLetterRecipients,User
+from .models import Profile,Image,Comment,NewsLetterRecipients,User, Likes
 from .email import send_welcome_email
 from django.contrib.auth.models import User
 # Create your views here.
 @login_required(login_url='/accounts/login')
 def welcome(request):
-    current_user=request.user.id
+    current_user=request.user
+    print(current_user)
     Profile.user = current_user
+    print(Profile.user)
     # profiles = Profile.objects.all()
     photos = Profile.get_all()
-    images = Image.objects.all().filter(profile__user=current_user)
-    comments = Comment.get_all()
+    images = Image.objects.all().filter(user=current_user)
+    # images=Image.objects.all()
+    print(images)
+    comments = Comment.objects.all()
     '''
     subscription form for a newsletter
     '''
@@ -44,14 +48,46 @@ def photo_post(request):
         if form.is_valid():
             image = form.save(commit=False)
             Image.profile = current_user
+            image.user=current_user
             image.save()
             return redirect('welcome')
     else:
         form = PostForm()
     return render(request, 'post.html', {"form": form})
+
+def post_comment(request, image_id):
+    current_image = Image.objects.get(id=image_id)
+    current_user = request.user
+    if request.method == 'POST':
+        '''
+        a form for adding Comments
+        '''
+        # image=get_object_or_404(Images,id=id)
+        if request.method=='POST':
+            current_user=request.user
+            form = CommentForm(request.POST, request.FILES)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.user = current_user
+                comment.image = current_image
+                comment.save()
+            return redirect('/')
+    else:
+            form = CommentForm()
+    return render(request, 'comment.html', {"form": form, "current_image":current_image,"id":image_id})
+
+
+@login_required
+def imagedetails(request,image_id):
+    image = Image.objects.get(id = image_id)
+    comment = Comment.objects.filter(image= image)
+    return render(request, 'imagedetails.html', {"image":image, "comment":comment, id:image_id})
+
+
 @login_required
 def all(request):
     return render(request,"welcome.html")
+
 @login_required
 def prof(request):
     current_user = request.user
@@ -93,34 +129,32 @@ def search_results(request):
 
 
 @login_required
-def viewprofile(request):
+def viewprofile(request, profile_id):
     '''
     view function for displaying a user's profile page
     '''
     current_user=request.user.id
     Profile.user = current_user
-    pics = Profile.objects.all()
+    pics = Profile.objects.filter(id = profile_id)
     snaps = Image.get_all()
 
     print(snaps)
-    return render(request, 'viewprofile.html', {"pics":pics, "snaps":snaps})
+    return render(request, 'viewprofile.html', {"pics":pics, "snaps":snaps, id:profile_id})
 
 
-def post_comment(request,id):
-    current_user = request.user
-    if request.method == 'POST':
-        '''
-        a form for adding Comments
-        '''
-        form = CommentForm(request.POST, request.FILES)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            Profile.user = current_user
-            comment.save()
-            return redirect('welcome')
+def like_image(request,id):
+    current_user=request.user.id
+    post = get_object_or_404(Images, id=id)
+    if current_user in image.likes.all():
+        image.likes.add(current_user)
+        image.likes.remove(current_user)
     else:
-            form = CommentForm()
-    return render(request, 'comment.html', {"form": form, "id":id})
+        image.likes.add(current_user)
+
+        return redirect('/')
+    return redirect('/')
+
+
 
 # def userprofile(request,profile_id):
 #     profile = Profile.objects.get(id = profile_id)

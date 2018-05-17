@@ -1,0 +1,59 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card" style="max-width: 120rem;">
+
+          <img src="{{image.profile.profile_photo.url }}" alt="vv" style="height:70px;width:70px; border-radius:50%; display:inline;">
+
+            <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{photo.name}}</strong> </p>
+      {%endfor%}
+
+      <img class="center" src="{{image.image.url }}" class="center" alt="Card image cap">
+          <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{image.caption}}</strong> </p>
+          <span style="font-size:200%; padding:3%;">
+                                              {{images.likes.count}} <a href="{% url 'like_image' id=images.pk %}"> <ion-icon name="heart-empty"></ion-icon></a>
+                                              <a href="{% url 'addcomment' id=images.pk %}">
+                                                  <ion-icon name="chatbubbles"></ion-icon>
+                                              </a>
+                                          </span>
+                                        
+        <div class="card-body">
+          {%for comment in comments%} <p class="card-text"><a href="{% url 'viewprofile' %}">{{comment.author}}</a>:{{comment.post}} </p>  {%endfor%}
+          <a href="{% url 'comment' %}" class="btn btn-primary">Add Comment</a>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
