@@ -2,7 +2,7 @@ from .forms import PostForm, ProfileForm, CommentForm,NewsLetterForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect
-from .models import Profile,Image,Comment,NewsLetterRecipients,User, Likes
+from .models import Profile,Image,Comment,NewsLetterRecipients,User
 from .email import send_welcome_email
 from django.contrib.auth.models import User
 # Create your views here.
@@ -12,10 +12,10 @@ def welcome(request):
     print(current_user)
     Profile.user = current_user
     print(Profile.user)
-    # profiles = Profile.objects.all()
-    photos = Profile.get_all()
+
+    photos = Profile.objects.all().filter(user=current_user)
     images = Image.objects.all().filter(user=current_user)
-    # images=Image.objects.all()
+
     print(images)
     comments = Comment.objects.all()
     '''
@@ -42,13 +42,14 @@ def photo_post(request):
     '''
     form for uploading Images to instagram
     '''
-    current_user = request.user
+    current_user = request.user.id
+    user_instance =User.objects.get(id=request.user.id)
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.save(commit=False)
-            Image.profile = current_user
-            image.user=current_user
+            image.profile__user = current_user
+            image.user=user_instance
             image.save()
             return redirect('welcome')
     else:
@@ -81,7 +82,13 @@ def post_comment(request, image_id):
 def imagedetails(request,image_id):
     image = Image.objects.get(id = image_id)
     comment = Comment.objects.filter(image= image)
-    return render(request, 'imagedetails.html', {"image":image, "comment":comment, id:image_id})
+
+
+    is_liked=False
+    if image.likes.filter(id=request.user.id).exists():
+        is_liked = True
+
+    return render(request, 'imagedetails.html', {"image":image, "comment":comment, id:image_id,"is_liked":is_liked})
 
 
 @login_required
@@ -133,26 +140,24 @@ def viewprofile(request, profile_id):
     '''
     view function for displaying a user's profile page
     '''
-    current_user=request.user.id
+    current_user = request.user
+    current_user.id=request.user.id
     Profile.user = current_user
     pics = Profile.objects.filter(id = profile_id)
-    snaps = Image.get_all()
+    snaps = Image.objects.filter(profile__user = current_user.id)
 
     print(snaps)
     return render(request, 'viewprofile.html', {"pics":pics, "snaps":snaps, id:profile_id})
 
 
-def like_image(request,id):
-    current_user=request.user.id
-    post = get_object_or_404(Images, id=id)
-    if current_user in image.likes.all():
-        image.likes.add(current_user)
-        image.likes.remove(current_user)
+def likes(request, image_id):
+    image = Image.objects.get(id=image_id)
+    if image.likes.filter(id=request.user.id).exists():
+        image.likes.remove(request.user)
     else:
-        image.likes.add(current_user)
-
-        return redirect('/')
-    return redirect('/')
+        image.likes.add(request.user)
+    print(image)
+    return redirect(welcome)
 
 
 

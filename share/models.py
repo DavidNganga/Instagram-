@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-
-
 class Profile(models.Model):
     name = models.CharField(max_length = 30,null = True)
     bio = models.CharField(max_length = 30)
@@ -37,6 +35,9 @@ class Profile(models.Model):
 
          return names
 
+
+
+
 from tinymce.models import HTMLField
 class Image(models.Model):
     name = models.CharField(max_length =30)
@@ -65,11 +66,20 @@ class Image(models.Model):
     def get_imagecurrent(cls, current_user):
         images=Image.objects.filter(profile__user=current_user)
         return images
+    def total_likes(self):
+        return self.likes.count()
 
 class Comment(models.Model):
     post = models.CharField(max_length=150, null = True)
     author=models.ForeignKey(Profile, on_delete=models.CASCADE,null=True)
     image = models.ForeignKey(Image,null = True,on_delete = models.CASCADE)
+
+    def __str__(self):
+        return self.post
+
+    def save_comment(self):
+        self.save()
+
 
     @classmethod
     def get_all(cls):
@@ -82,20 +92,6 @@ class Comment(models.Model):
         return views
 
 
-
 class NewsLetterRecipients(models.Model):
     name = models.CharField(max_length = 30)
     email = models.EmailField()
-
-
-class Likes(models.Model):
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
-    likes=models.IntegerField(default=0, null=True)
-
-    def __str__(self):
-        return self.user.username
-
-    @classmethod
-    def get_likes(cls):
-        likes=cls.objects.all()
-        return likes
