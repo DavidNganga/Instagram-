@@ -1,13 +1,16 @@
-from .forms import PostForm, ProfileForm, CommentForm,NewsLetterForm
+from .forms import PostForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect
-from .models import Profile,Image,Comment,NewsLetterRecipients,User
+from .models import Profile,Image,Comment,User
 from .email import send_welcome_email
 from django.contrib.auth.models import User
 # Create your views here.
 @login_required(login_url='/accounts/login')
 def welcome(request):
+    '''
+    functions for the landing page
+    '''
     current_user=request.user
     print(current_user)
     Profile.user = current_user
@@ -16,26 +19,11 @@ def welcome(request):
     photos = Profile.objects.all().filter(user=current_user)
     images = Image.objects.all().filter(user=current_user)
 
-    print(images)
+
     comments = Comment.objects.all()
-    '''
-    subscription form for a newsletter
-    '''
-    if request.method == 'POST':
-        form = NewsLetterForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['your_name']
-            email = form.cleaned_data['email']
 
-            recipient = NewsLetterRecipients(name = name,email =email)
-            recipient.save()
-            send_welcome_email(name,email)
+    return render(request, 'welcome.html', {"images":images,"photos":photos, "comments":comments})
 
-            HttpResponseRedirect('welcome')
-            print(comments)
-    else:
-        form = NewsLetterForm()
-    return render(request, 'welcome.html', {"images":images,"photos":photos,"letterForm":form, "comments":comments})
 
 @login_required
 def photo_post(request):
@@ -56,6 +44,9 @@ def photo_post(request):
         form = PostForm()
     return render(request, 'post.html', {"form": form})
 
+'''
+function to allow posting of comment for specific Images
+'''
 def post_comment(request, image_id):
     current_image = Image.objects.get(id=image_id)
     current_user = request.user
@@ -94,6 +85,7 @@ def imagedetails(request,image_id):
 @login_required
 def all(request):
     return render(request,"welcome.html")
+
 
 @login_required
 def prof(request):
@@ -152,15 +144,14 @@ def viewprofile(request, profile_id):
 
 def likes(request, image_id):
     image = Image.objects.get(id=image_id)
+    is_liked=False
     if image.likes.filter(id=request.user.id).exists():
         image.likes.remove(request.user)
+        is_liked=False
     else:
         image.likes.add(request.user)
+        is_liked=True
+
     print(image)
-    return redirect(welcome)
 
-
-
-# def userprofile(request,profile_id):
-#     profile = Profile.objects.get(id = profile_id)
-#     return render(request, 'userprofile.html',{"profile":profile, id: profile_id})
+    return redirect(imagedetails, image_id)

@@ -7,6 +7,7 @@ class Profile(models.Model):
     bio = models.CharField(max_length = 30)
     profile_photo = models.ImageField(upload_to = 'images/',null = True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    follow=models.ManyToManyField(User,related_name='who_following',blank=True)
 
     @classmethod
     def get_all(cls):
@@ -36,8 +37,6 @@ class Profile(models.Model):
          return names
 
 
-
-
 from tinymce.models import HTMLField
 class Image(models.Model):
     name = models.CharField(max_length =30)
@@ -55,19 +54,27 @@ class Image(models.Model):
 
     def __str__(self):
         return self.name
+
     def save_image(self):
         self.save()
+
     def delete_image(self):
         self.delete()
+
+    def update_image(self):
+        self.update()
 
     def get_Image_by_id(cls,id):
         images = cls.objects.get(id=id)
         return images
+
     def get_imagecurrent(cls, current_user):
         images=Image.objects.filter(profile__user=current_user)
         return images
+
     def total_likes(self):
         return self.likes.count()
+
 
 class Comment(models.Model):
     post = models.CharField(max_length=150, null = True)
@@ -80,18 +87,11 @@ class Comment(models.Model):
     def save_comment(self):
         self.save()
 
-
     @classmethod
     def get_all(cls):
         opinions = cls.objects.all()
         return opinions
 
-
     def get_Comment_by_id(cls,id):
         views = cls.objecs.get(id=id)
         return views
-
-
-class NewsLetterRecipients(models.Model):
-    name = models.CharField(max_length = 30)
-    email = models.EmailField()

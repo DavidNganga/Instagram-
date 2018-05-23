@@ -1,4 +1,4 @@
-from .models import Image,Profile,Comment,NewsLetterRecipients
+from .models import Image,Profile,Comment
 from django import forms
 '''
 a form for posting new images,captions
@@ -6,12 +6,7 @@ a form for posting new images,captions
 class PostForm(forms.ModelForm):
     class Meta:
         model = Image
-        exclude=["profile","comments", "user"]
-
-
-class NewsLetterForm(forms.Form):
-    your_name = forms.CharField(label='First Name',max_length=30)
-    email = forms.EmailField(label='Email')
+        exclude=["profile" "user"]
 
 
 class ProfileForm(forms.ModelForm):

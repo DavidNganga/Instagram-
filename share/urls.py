@@ -11,7 +11,6 @@ urlpatterns=[
     url(r'^viewprofile/(\d+)', views.viewprofile, name='viewprofile'),
     url(r'^search/',views.search_results, name='search_results'),
     url(r'^comment/(\d+)',views.post_comment, name='comment'),
-    # url(r'^image/(?P<id>\d+)/likes', views.like_image, name='like_image'),
     url(r'^likes/(\d+)',views.likes, name='likes'),
     url(r'^imagedetails/(\d+)', views.imagedetails, name='imagedetails'),
 ]

@@ -9,6 +9,7 @@
 <div class="card" style="max-width: 120rem;">
 {% for photo in photos%}
     <a href="#"><img src="{{photo.profile_photo.url }}" alt="vv" style="height:70px;width:70px; border-radius:50%; display:inline;"></a>
+
 {% endfor %}
       <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{photo.name}}</strong> </p>
 
@@ -18,21 +19,13 @@
     <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{image.caption}}</strong> </p>
 
   <div class="card-body">
-    here{{photo.profile_photo}}"
+    {{photo.profile_photo}}"
       {% for comment in comments%}
   <p class="card-text">{{comment.post}} </p>
 {% endfor %}
   </div>
 
-  {%if is_liked%}
-  <a href="{%url 'likes' image.id %}">
-  <ion-icon name="heart">{{likes}} likes</ion-icon>
-</a>
-  {%else%}
-             <a href="{%url 'likes' image.id %}">
-             <ion-icon name="heart">{{likes}} dislike</ion-icon>
-           </a>
-{% endif %}
+
 
   </div>
 
@@ -41,11 +34,5 @@
 
 {%endfor%}
 
-<div class="container-fluid">
-  <form  action="{%url 'welcome'%}" method="post">
-    {%csrf_token%}
-    {% bootstrap_form letterForm layout='inline' %}
-    <input type="submit" value="Subscribe">
-  </form>
-</div>
+
       {% endblock %}

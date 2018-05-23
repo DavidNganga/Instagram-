@@ -11,6 +11,13 @@
               <br>
               <br>
               <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{pic.bio}}</strong> </p>
+              {%if is_follow %}
+                    <button type="submit"name=""class="btn btn-warning"><a href="{%url 'Follow' profile_info.id %}" style="color:white;">Unfollow</a></button>
+                    {% else %}
+                    <button type="submit"name=""class="btn btn-warning "><a href="{%url 'Follow' profile_info.id %}" style="color:white;">Follow</a></button>
+                   {% endif %}
+
+
             </div>
           </div>
         </div>
