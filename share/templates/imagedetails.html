@@ -10,16 +10,17 @@
 
 
 <a href="{% url 'imagedetails' image.id %}">  <img class="center" src="{{image.image.url }}" class="center" alt="Card image cap"></a>
-<p>{{image.name}}</p>
+<h2>{{image.name}}</h2>
 <p>{{image.caption}}</p>
 
 
   <div class="card-body">
-    {{image.id}}
+
   <a href="{%url 'comment' image.id%}">Add Comment</a>
+  <br>
   {%if is_liked%}
   <a href="{%url 'likes' image.id %}">
-  <ion-icon name="heart">{{likes}} dislikes</ion-icon>
+  <ion-icon name="heart">{{likes}} dislike</ion-icon>
 </a>
   {%else%}
              <a href="{%url 'likes' image.id %}">

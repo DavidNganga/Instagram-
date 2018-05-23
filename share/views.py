@@ -100,7 +100,7 @@ def prof(request):
             profile = form.save(commit=False)
             Profile.user = current_user
             profile.save()
-            return redirect('viewprofile')
+            return redirect('welcome')
     else:
             form = ProfileForm()
     return render(request, 'profile.html', {"form": form})
@@ -135,10 +135,13 @@ def viewprofile(request, profile_id):
     current_user = request.user
     current_user.id=request.user.id
     Profile.user = current_user
+    profile1=Profile.objects.get(id=profile_id)
     pics = Profile.objects.filter(id = profile_id)
-    snaps = Image.objects.filter(profile__user = current_user.id)
+    snaps = Image.objects.filter(profile =profile1 )
 
-    print(snaps)
+    #follows=Profile.objects.get(id=request.user.id)
+
+
     return render(request, 'viewprofile.html', {"pics":pics, "snaps":snaps, id:profile_id})
 
 
@@ -155,3 +158,13 @@ def likes(request, image_id):
     print(image)
 
     return redirect(imagedetails, image_id)
+
+def follow(request,user_id):
+
+    follows=Profile.objects.get(user=request.user)
+    user1=User.objects.get(id=user_id)
+    follows.follow.add(user1)
+    print(follows)
+
+
+    return redirect(viewprofile ,user1.id)

@@ -13,6 +13,7 @@ urlpatterns=[
     url(r'^comment/(\d+)',views.post_comment, name='comment'),
     url(r'^likes/(\d+)',views.likes, name='likes'),
     url(r'^imagedetails/(\d+)', views.imagedetails, name='imagedetails'),
+    url(r'^follow/(\d+)', views.follow, name='follow'),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
