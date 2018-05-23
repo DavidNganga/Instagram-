@@ -138,11 +138,14 @@ def viewprofile(request, profile_id):
     profile1=Profile.objects.get(id=profile_id)
     pics = Profile.objects.filter(id = profile_id)
     snaps = Image.objects.filter(profile =profile1 )
-
+    profile2=Profile.objects.get(id=request.user.id)
+    is_follow=False
+    if profile2.follow.filter(id=profile_id).exists():
+        is_follow=True
     #follows=Profile.objects.get(id=request.user.id)
 
 
-    return render(request, 'viewprofile.html', {"pics":pics, "snaps":snaps, id:profile_id})
+    return render(request, 'viewprofile.html', {"pics":pics, "snaps":snaps, id:profile_id,"is_follow":is_follow})
 
 
 def likes(request, image_id):
@@ -163,7 +166,15 @@ def follow(request,user_id):
 
     follows=Profile.objects.get(user=request.user)
     user1=User.objects.get(id=user_id)
-    follows.follow.add(user1)
+    print(user1)
+    is_follow=False
+    if follows.follow.filter(id=user_id).exists():
+        follows.follow.remove(user1)
+        is_follow=False
+    else:
+        follows.follow.add(user1)
+        is_follow=True
+
     print(follows)
 
 
