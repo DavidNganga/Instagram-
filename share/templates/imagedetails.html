@@ -2,20 +2,16 @@
 {% load static %}
 {% block content %}
 
-
+<div class="container">
+<div class="row">
+  <div class="col-md-6 col-md-offset-2">
 <div class="card" style="max-width: 120rem;">
-
-
-
-
 
 <a href="{% url 'imagedetails' image.id %}">  <img class="center" src="{{image.image.url }}" class="center" alt="Card image cap"></a>
 <h2>{{image.name}}</h2>
 <p>{{image.caption}}</p>
 
-
   <div class="card-body">
-
   <a href="{%url 'comment' image.id%}">Add Comment</a>
   <br>
   {%if is_liked%}

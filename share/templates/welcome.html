@@ -2,37 +2,30 @@
 {% load bootstrap3 %}
 {% load static%}
 {% block content %}
-
-
+<div class="container">
+<div class="row">
+  <div class="col-md-6 col-md-offset-2">
 <!-- looping through the Images -->
   {%for image in images%}
-<div class="card" style="max-width: 120rem;">
+<div class="card" style=" max-width: 90rem;">
+
 {% for photo in photos%}
     <a href="#"><img src="{{photo.profile_photo.url }}" alt="vv" style="height:70px;width:70px; border-radius:50%; display:inline;"></a>
-
 {% endfor %}
-      <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{photo.name}}</strong> </p>
 
 
-<a href="{% url 'imagedetails' image.id %}">  <img class="center" src="{{image.image.url }}" class="center" alt="Card image cap"></a>
-
-    <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{image.caption}}</strong> </p>
-
-  <div class="card-body">
-    {{photo.profile_photo}}"
-      {% for comment in comments%}
-  <p class="card-text">{{comment.post}} </p>
-{% endfor %}
-  </div>
-
-
-
-  </div>
+<div class="card-body">
+  <a href="{% url 'imagedetails' image.id %}">  <img src="{{image.image.url }}" class="center" alt="Card image cap"></a>
 
 </div>
+  <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{image.caption}}</strong> </p>
+    <!-- {{photo.profile_photo}}" -->
+{% for comment in comments%}
+<p class="card-text">{{comment.post}} </p>
+{% endfor %}
 
+  </div>
 
 {%endfor%}
-
 
       {% endblock %}
